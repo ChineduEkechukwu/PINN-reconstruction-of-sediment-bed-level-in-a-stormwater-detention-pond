@@ -12,16 +12,16 @@ The framing is deliberate about what the method can and cannot do:
 ## Reuse and extension
 This pipeline is deliberately small, CPU-only, and built from two cheap temperature sensors plus two survey epochs — the point is transferability to other low-instrumentation nature-based assets. Common adaptations:
 
-####•	Apply to a different pond: 
+•	Apply to a different pond: 
 Replace temperature_sensors.csv (same four columns, day-first timestamps) and GNSS.xlsx (same six columns). Then check, in order: Z_MAX (column depth) and Z_SENSOR (burial depth) in common.py; the T_BASE / DELTA_T envelope anchor in load_data(), which is calibrated to British pond conditions and will not transfer unexamined; and ke in compute_delta_z_LuceTonina().
 
-####•	Change the physics:
+•	Change the physics:
 pde_residual() in common.py is the single place the 1-D heat equation lives. thermo_u() is the single place the thermoelastic kernel lives. Both take model and are used identically by the PINN, the MC members, and (for the kernel) the B2 FD baseline — so a change propagates consistently across the comparison.
 
-####•	Reweight the loss:
+•	Reweight the loss:
 LAMBDA_PDE / LT / GNSS / BC / IC are module-level constants. The current GNSS weight (20) is the highest because the survey endpoint is the only absolute anchor in the system; lowering it lets the surface fit dominate and α drifts.
 
-####•	The obvious open extension:
+•	The obvious open extension:
 The PINN currently has no spatial dimension, which is precisely why GP kriging beats it per-point. Extending the network input from (z, t) to (x, y, z, t) and fitting against per-point dz_gnss rather than the spatial mean is the natural next step — the GNSS file already carries the eastings and northings.
 
 ## Data description and availability
