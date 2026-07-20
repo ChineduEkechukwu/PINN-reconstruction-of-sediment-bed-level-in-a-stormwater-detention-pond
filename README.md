@@ -1,3 +1,0 @@
-# PINN-reconstruction-of-sediment-bed-level-in-a-stormwater-detention-pond
-Physics-informed neural network (PINN) reconstructing sediment bed-level change in a nature-based stormwater detention pond, River Chew catchment (UK). Fuses cheap dual-temperature sensors (Luce–Tonina Δz) with GNSS levelling via a thermoelastic kernel. Includes baselines, Monte Carlo uncertainty, and full reproducible pipeline.
-
